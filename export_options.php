@@ -51,6 +51,9 @@ class quiz_exportattemptscsv_options extends mod_quiz_attempts_report_options
     /** @var bool whether to show the correct response columns. */
     public $showright = false;
 
+    /** @var bool whether to show the gdpr sensible columns. */
+    public $showgdpr = true;
+
 
     protected function get_url_params()
     {
@@ -58,6 +61,7 @@ class quiz_exportattemptscsv_options extends mod_quiz_attempts_report_options
         $params['qtext']      = $this->showqtext;
         $params['resp']       = $this->showresponses;
         $params['right']      = $this->showright;
+        $params['gdpr']      = $this->showgdpr;
         return $params;
     }
 
@@ -67,6 +71,7 @@ class quiz_exportattemptscsv_options extends mod_quiz_attempts_report_options
         $toform->qtext      = $this->showqtext;
         $toform->resp       = $this->showresponses;
         $toform->right      = $this->showright;
+        $toform->gdpr      = $this->gdpr;
         return $toform;
     }
 
@@ -76,6 +81,7 @@ class quiz_exportattemptscsv_options extends mod_quiz_attempts_report_options
         $this->showqtext     = $fromform->qtext;
         $this->showresponses = $fromform->resp;
         $this->showright     = $fromform->right;
+        $this->showgdpr     = $fromform->gdpr;
     }
 
     public function setup_from_params()
@@ -84,6 +90,7 @@ class quiz_exportattemptscsv_options extends mod_quiz_attempts_report_options
         $this->showqtext     = optional_param('qtext', $this->showqtext,     PARAM_BOOL);
         $this->showresponses = optional_param('resp',  $this->showresponses, PARAM_BOOL);
         $this->showright     = optional_param('right', $this->showright,     PARAM_BOOL);
+        $this->showgdpr     = optional_param('gdpr', $this->showgdpr,     PARAM_BOOL);
 
     }
 
@@ -93,6 +100,7 @@ class quiz_exportattemptscsv_options extends mod_quiz_attempts_report_options
         $this->showqtext     = get_user_preferences('quiz_report_responses_qtext', $this->showqtext);
         $this->showresponses = get_user_preferences('quiz_report_responses_resp',  $this->showresponses);
         $this->showright     = get_user_preferences('quiz_report_responses_right', $this->showright);
+        $this->showgdpr     = get_user_preferences('quiz_report_responses_gdpr', $this->showgdpr);
     }
 
     public function update_user_preferences() {
@@ -101,6 +109,7 @@ class quiz_exportattemptscsv_options extends mod_quiz_attempts_report_options
         set_user_preference('quiz_report_responses_qtext', $this->showqtext);
         set_user_preference('quiz_report_responses_resp',  $this->showresponses);
         set_user_preference('quiz_report_responses_right', $this->showright);
+        set_user_preference('quiz_report_responses_gdpr', $this->showgdpr);
     }
 
 

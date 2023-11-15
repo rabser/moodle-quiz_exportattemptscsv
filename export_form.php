@@ -49,19 +49,17 @@ class quiz_exportattemptscsv_settings_form extends mod_quiz_attempts_report_form
                 get_string('response', 'quiz_responses')),
             $mform->createElement('advcheckbox', 'right', '',
                 get_string('rightanswer', 'quiz_responses')),
+            $mform->createElement('advcheckbox', 'gdpr', '',
+                get_string('gdprready', 'quiz_exportattemptscsv')),
         ), 'coloptions', get_string('showthe', 'quiz_responses'), array(' '), false);
         $mform->disabledIf('qtext', 'attempts', 'eq', quiz_attempts_report::ENROLLED_WITHOUT);
         $mform->disabledIf('resp',  'attempts', 'eq', quiz_attempts_report::ENROLLED_WITHOUT);
         $mform->disabledIf('right', 'attempts', 'eq', quiz_attempts_report::ENROLLED_WITHOUT);
+        $mform->disabledIf('gdpr', 'attempts', 'eq', quiz_attempts_report::ENROLLED_WITHOUT);
     }
 
     public function validation($data, $files) {
         $errors = parent::validation($data, $files);
-
-        if ($data['attempts'] != quiz_attempts_report::ENROLLED_WITHOUT && !(
-                $data['qtext'] || $data['resp'] || $data['right'])) {
-            $errors['coloptions'] = get_string('reportmustselectstate', 'quiz');
-        }
 
         return $errors;
     }

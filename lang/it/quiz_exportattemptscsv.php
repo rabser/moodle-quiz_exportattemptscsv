@@ -49,4 +49,5 @@ $string['qarightanswer'] = 'Risposta corretta';
 $string['qaqtext'] = 'Testo domanda';
 $string['qaresponses'] = 'Testo risposta';
 $string['qasdname'] = 'Nome dello step';
+$string['gdprready'] = 'Esporta dati personali';
 

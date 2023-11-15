@@ -177,11 +177,13 @@ class quiz_exportattemptscsv_report extends quiz_attempts_report
 	// QUERY suggestions from https://docs.moodle.org/dev/Overview_of_the_Moodle_question_engine#Detailed_data_about_an_attempt
 	$sqlSetRowNumber="SET @row_number = 0";
 	$sqlQuizAttemptDetails="SELECT
-    		(@row_number:=@row_number + 1) AS num,
-    		user.username,
-    		user.firstname,
-    		user.lastname,
-    		quiza.quiz,
+    		(@row_number:=@row_number + 1) AS num,";
+	if ( $this->options->showgdpr ) {
+		$sqlQuizAttemptDetails.= " user.username,
+    					   user.firstname,
+    					   user.lastname,";
+	}
+    	$sqlQuizAttemptDetails.= " quiza.quiz,
     		quiza.id AS quizattemptid,
     		quiza.attempt,
     		quiza.sumgrades,
@@ -194,8 +196,11 @@ class quiz_exportattemptscsv_report extends quiz_attempts_report
     		qas.sequencenumber,
     		qas.state,
     		qas.fraction,
-    		qas.timecreated,
-    		qas.userid,";
+    		qas.timecreated,";
+
+	if ( $this->options->showgdpr ) {
+ 	 	$sqlQuizAttemptDetails.= "qas.userid,";
+	}
 	if ( $this->options->showright ) {
 		$sqlQuizAttemptDetails.= "qa.rightanswer,";
 	}
@@ -223,9 +228,11 @@ class quiz_exportattemptscsv_report extends quiz_attempts_report
 	$csvFile = fopen($tmp_csv_file, 'w');
 
 	$header[]=get_string('seq', 'quiz_exportattemptscsv');
-	$header[]=get_string('username');
-	$header[]=get_string('firstname');
-	$header[]=get_string('lastname');
+	if ( $this->options->showgdpr ) {
+		$header[]=get_string('username');
+		$header[]=get_string('firstname');
+		$header[]=get_string('lastname');
+	}
 	$header[]=get_string('quizid', 'quiz_exportattemptscsv');
 	$header[]=get_string('quizattemptid', 'quiz_exportattemptscsv');
 	$header[]=get_string('quizattempt', 'quiz_exportattemptscsv');
@@ -240,7 +247,9 @@ class quiz_exportattemptscsv_report extends quiz_attempts_report
 	$header[]=get_string('qasstate', 'quiz_exportattemptscsv');
 	$header[]=get_string('qasfraction', 'quiz_exportattemptscsv');
 	$header[]=get_string('qastimecreated', 'quiz_exportattemptscsv');
-	$header[]=get_string('qasuserid', 'quiz_exportattemptscsv');
+	if ( $this->options->showgdpr ) {
+		$header[]=get_string('qasuserid', 'quiz_exportattemptscsv');
+	}
 
 	if ( $this->options->showright ) {
 		$header[]= get_string('qarightanswer', 'quiz_exportattemptscsv');
