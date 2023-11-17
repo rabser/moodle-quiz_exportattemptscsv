@@ -10,7 +10,7 @@ This plugin should be compatible with Moodle 3.11+
 
 Or you can install using git. Type this commands in the root of your Moodle install
 
-    git clone https://github.com/moodleou/moodle-quiz_exportattemptscsv.git mod/quiz/report/exportattemptscsv
+    git clone https://github.com/rabser/moodle-quiz_exportattemptscsv.git mod/quiz/report/exportattemptscsv
     echo '/mod/quiz/report/exportattemptscsv/' >> .git/info/exclude
     
 Then run the moodle update process
