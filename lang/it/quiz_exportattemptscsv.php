@@ -51,3 +51,5 @@ $string['qaresponses'] = 'Testo risposta';
 $string['qasdname'] = 'Nome dello step';
 $string['gdprready'] = 'Esporta dati personali';
 
+$string['privacy:metadata'] = 'Il plugin consente il download di dati personali.';
+

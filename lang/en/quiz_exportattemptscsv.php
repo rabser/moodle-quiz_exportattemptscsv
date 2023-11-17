@@ -51,3 +51,5 @@ $string['qaresponses'] = 'Attempt response';
 $string['qasdname'] = 'Attempt step name';
 $string['gdprready'] = 'Export personal information';
 
+$string['privacy:metadata'] = 'The Quiz export attempts to CSV does not store any personal data, but enable to download personal data about quiz attempts.';
+
