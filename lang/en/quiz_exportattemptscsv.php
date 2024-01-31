@@ -25,7 +25,7 @@
  */
 
 $string['pluginname'] = 'QuizExportAttemptsCsv';
-$string['exportattemptscsv'] = 'Export Attempts history as CSV'; // displayed in the navigation menu
+$string['exportattemptscsv'] = 'Export Attempts history as CSV'; // Displayed in the navigation menu.
 $string['exportselected'] = 'Export selected attempts history as CSV';
 $string['exportattemptcheck'] = 'Export history for selected attempts?';
 $string['exportattempt'] = 'Export attempt';
@@ -50,6 +50,4 @@ $string['qaqtext'] = 'Question text';
 $string['qaresponses'] = 'Attempt response';
 $string['qasdname'] = 'Attempt step name';
 $string['gdprready'] = 'Export personal information';
-
-$string['privacy:metadata'] = 'The Quiz export attempts to CSV does not store any personal data, but enable to download personal data about quiz attempts.';
 

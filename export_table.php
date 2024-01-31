@@ -37,26 +37,22 @@ require_once($CFG->dirroot . '/mod/quiz/report/attemptsreport_table.php');
  * @copyright based on work by 2014 Johannes Burk
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class quiz_exportattemptscsv_table extends quiz_attempts_report_table
-{
+class quiz_exportattemptscsv_table extends quiz_attempts_report_table {
 
     public function __construct($quiz, $context, $qmsubselect,
-                                quiz_exportattemptscsv_options $options, $groupstudents, $students, $questions, $reporturl)
-    {
+                                quiz_exportattemptscsv_options $options, $groupstudents, $students, $questions, $reporturl) {
         parent::__construct('mod-quiz-report-export-report', $quiz, $context,
             $qmsubselect, $options, $groupstudents, $students, $questions, $reporturl);
     }
 
-    public function build_table()
-    {
-        // Strange: parent class quiz_attempts_report_table uses this property but doesn't define it
-        // So we have to do it here... just for quiz_attempts_report::add_time_columns
+    public function build_table() {
+        // Strange: parent class quiz_attempts_report_table uses this property but doesn't define it.
+        // So we have to do it here... just for quiz_attempts_report::add_time_columns.
         $this->strtimeformat = str_replace(',', ' ', get_string('strftimedatetime'));
         parent::build_table();
     }
 
-    protected function submit_buttons()
-    {
+    protected function submit_buttons() {
         global $PAGE;
         echo '<input type="submit" id="exportattemptsbutton" name="export" value="' .
             get_string('exportselected', 'quiz_exportattemptscsv') . '"/>';

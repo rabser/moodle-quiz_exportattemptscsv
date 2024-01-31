@@ -25,7 +25,7 @@
  */
 
 $string['pluginname'] = 'QuizExportAttemptsCsv';
-$string['exportattemptscsv'] = 'Salva lo storico delle risposte come CSV'; // displayed in the navigation menu
+$string['exportattemptscsv'] = 'Salva lo storico delle risposte come CSV'; // Displayed in the navigation menu.
 $string['exportselected'] = 'Salva lo storico delle risposte dei tentativi selezionati come CSV';
 $string['exportattemptcheck'] = 'Salvo lo storico delle risposte per i tentativi selezionati?';
 $string['exportattempt'] = 'Salva tentativi';
@@ -50,6 +50,4 @@ $string['qaqtext'] = 'Testo domanda';
 $string['qaresponses'] = 'Testo risposta';
 $string['qasdname'] = 'Nome dello step';
 $string['gdprready'] = 'Esporta dati personali';
-
-$string['privacy:metadata'] = 'Il plugin consente il download di dati personali.';
 

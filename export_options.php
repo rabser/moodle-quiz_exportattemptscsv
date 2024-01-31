@@ -39,8 +39,7 @@ require_once($CFG->dirroot . '/mod/quiz/report/attemptsreport_options.php');
  * @copyright based on work by 2014 Johannes Burk
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class quiz_exportattemptscsv_options extends mod_quiz_attempts_report_options
-{
+class quiz_exportattemptscsv_options extends mod_quiz_attempts_report_options {
 
     /** @var bool whether to show the question text columns. */
     public $showqtext = false;
@@ -55,8 +54,7 @@ class quiz_exportattemptscsv_options extends mod_quiz_attempts_report_options
     public $showgdpr = true;
 
 
-    protected function get_url_params()
-    {
+    protected function get_url_params() {
         $params = parent::get_url_params();
         $params['qtext']      = $this->showqtext;
         $params['resp']       = $this->showresponses;
@@ -65,8 +63,7 @@ class quiz_exportattemptscsv_options extends mod_quiz_attempts_report_options
         return $params;
     }
 
-    public function get_initial_form_data()
-    {
+    public function get_initial_form_data() {
         $toform = parent::get_initial_form_data();
         $toform->qtext      = $this->showqtext;
         $toform->resp       = $this->showresponses;
@@ -75,8 +72,7 @@ class quiz_exportattemptscsv_options extends mod_quiz_attempts_report_options
         return $toform;
     }
 
-    public function setup_from_form_data($fromform)
-    {
+    public function setup_from_form_data($fromform) {
         parent::setup_from_form_data($fromform);
         $this->showqtext     = $fromform->qtext;
         $this->showresponses = $fromform->resp;
@@ -84,8 +80,7 @@ class quiz_exportattemptscsv_options extends mod_quiz_attempts_report_options
         $this->showgdpr     = $fromform->gdpr;
     }
 
-    public function setup_from_params()
-    {
+    public function setup_from_params() {
         parent::setup_from_params();
         $this->showqtext     = optional_param('qtext', $this->showqtext,     PARAM_BOOL);
         $this->showresponses = optional_param('resp',  $this->showresponses, PARAM_BOOL);
@@ -113,8 +108,7 @@ class quiz_exportattemptscsv_options extends mod_quiz_attempts_report_options
     }
 
 
-    public function resolve_dependencies()
-    {
+    public function resolve_dependencies() {
         $this->checkboxcolumn = true;
     }
 }
