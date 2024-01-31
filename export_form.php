@@ -26,7 +26,10 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot . '/mod/quiz/report/attemptsreport_form.php');
+// Only required if Moodle < 4.2 Release.
+if ($CFG->branch < 402 ) {
+    require_once($CFG->dirroot . '/mod/quiz/report/attemptsreport_form.php');
+}
 
 
 /**
