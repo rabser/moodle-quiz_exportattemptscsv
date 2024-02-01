@@ -159,9 +159,18 @@ class quiz_exportattemptscsv_report extends quiz_attempts_report {
         chmod($tmpcsvfile, 0644);
 
         // QUERY suggestions from https://docs.moodle.org/dev/Overview_of_the_Moodle_question_engine#Detailed_data_about_an_attempt.
-        $sqlsetrownumber = "SET @row_number = 0";
-        $sqlquizattemptsdetails = "SELECT
-            (@row_number:=@row_number + 1) AS num,";
+        if ($dbfamily == 'postgres') {
+            // The row autonumbering feature for postgres.
+            $sqlsetrownumber = "";
+            $sqlquizattemptsdetails = "SELECT
+                                   ROW_NUMBER () OVER (ORDER BY quiza.userid),";
+        } else {
+            // The row autonumbering feature for MySQL/MariaDB.
+            $sqlsetrownumber = "SET @row_number = 0";
+            $sqlquizattemptsdetails = "SELECT
+                                              (@row_number:=@row_number + 1) AS num,";
+        }
+
         if ( $this->options->showgdpr ) {
             $sqlquizattemptsdetails .= " user.username,
                                          user.firstname,
@@ -242,9 +251,12 @@ class quiz_exportattemptscsv_report extends quiz_attempts_report {
 
         $header[] = get_string('qasdname', 'quiz_exportattemptscsv');
 
-        fputcsv ($csvfile, array_map(fn($v) => $v.' ', $header) );
+        fputcsv ($csvfile, array_map(fn($v) => $v.' ', $header));
 
-        $DB->execute($sqlsetrownumber);
+        // For MySQL/MariaDB set first rownumber to zero
+        if ($sqlsetrownumber != "") {
+            $DB->execute($sqlsetrownumber);
+        }
 
         foreach ($attemptids as $attemptid) {
             $params[0] = $attemptid;
