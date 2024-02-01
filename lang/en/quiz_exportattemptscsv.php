@@ -50,4 +50,5 @@ $string['qaqtext'] = 'Question text';
 $string['qaresponses'] = 'Attempt response';
 $string['qasdname'] = 'Attempt step name';
 $string['gdprready'] = 'Export personal information';
-
+$string['gdprready'] = 'Export personal information';
+$string['privacy:metadata'] = 'This Quiz Report only permit download of existing attempts data.';

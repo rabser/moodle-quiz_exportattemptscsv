@@ -15,19 +15,26 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Quiz export attempts history report version information.
+ * This file defines the quiz export attempts privacy provider
  *
- * @package   quiz_export
- * @copyright 2023 Sergio Rabellino - sergio.rabellino@unito.it
- * @copyright based on work by 2020 CBlue Srl
- * @copyright based on work by 2014 Johannes Burk
+ * @package   quiz_exportattemptscsv
+ * @copyright 2024 Sergio Rabellino - sergio.rabellino@unito.it
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+namespace block_calendar_month\privacy;
 
-$plugin->version = 2024020100;
-$plugin->requires = 2020061500;
-$plugin->maturity = MATURITY_STABLE;
-$plugin->release = '1.0.3 (Build 2024020100)';
-$plugin->component = 'quiz_exportattemptscsv';
+class provider implements
+    // This plugin does not store any personal user data.
+    \core_privacy\local\metadata\null_provider {
+
+    /**
+     * Get the language string identifier with the component's language
+     * file to explain why this plugin stores no data.
+     *
+     * @return  string
+     */
+    public static function get_reason(): string {
+        return 'privacy:metadata';
+    }
+}

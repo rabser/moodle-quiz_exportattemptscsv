@@ -50,4 +50,4 @@ $string['qaqtext'] = 'Testo domanda';
 $string['qaresponses'] = 'Testo risposta';
 $string['qasdname'] = 'Nome dello step';
 $string['gdprready'] = 'Esporta dati personali';
-
+$string['privacy:metadata'] = 'Questo Quiz  Report consente solo il download dei tentativi esistenti.';
