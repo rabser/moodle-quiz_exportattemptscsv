@@ -159,7 +159,7 @@ class quiz_exportattemptscsv_report extends quiz_attempts_report {
         chmod($tmpcsvfile, 0644);
 
         // QUERY suggestions from https://docs.moodle.org/dev/Overview_of_the_Moodle_question_engine#Detailed_data_about_an_attempt.
-        if ($dbfamily == 'postgres') {
+        if ($DB->get_dbfamily() == 'postgres') {
             // The row autonumbering feature for postgres.
             $sqlsetrownumber = "";
             $sqlquizattemptsdetails = "SELECT
