@@ -44,8 +44,7 @@ class quiz_exportattemptscsv_settings_form extends mod_quiz_attempts_report_form
 
     /**
      * Define extended preference fields.
-     * @param object MoodleQuickForm $mform the wrapped MoodleQuickForm.
-     * @return nothing
+     * @param object $mform the wrapped MoodleQuickForm.
      */
     protected function other_preference_fields(MoodleQuickForm $mform) {
         $mform->addGroup([

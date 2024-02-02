@@ -43,10 +43,9 @@ class quiz_exportattemptscsv_report extends quiz_attempts_report {
 
     /**
      * Override function to displays the report.
-     * @param $quiz this quiz.
-     * @param $cm the course-module for this quiz.
-     * @param $course the courses we are in.
-     * @return nothing, print out the table as side-effect.
+     * @param object $quiz this quiz.
+     * @param object $cm the course-module for this quiz.
+     * @param object $course the courses we are in.
      */
     public function display($quiz, $cm, $course) {
         global $OUTPUT;
