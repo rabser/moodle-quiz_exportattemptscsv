@@ -44,7 +44,7 @@ class quiz_exportattemptscsv_table extends quiz_attempts_report_table {
      * @param object $quiz
      * @param context $context
      * @param string $qmsubselect
-     * @param quiz_overview_options $options
+     * @param quiz_exportattemptscsv_options $options
      * @param \core\dml\sql_join $groupstudentsjoins
      * @param \core\dml\sql_join $studentsjoins
      * @param array $questions

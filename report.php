@@ -35,7 +35,7 @@ require_once($CFG->dirroot . '/mod/quiz/report/exportattemptscsv/export_table.ph
 
 /**
  * Class to implement the report composition.
- */ 
+ */
 class quiz_exportattemptscsv_report extends quiz_attempts_report {
 
     /** @var object Store options for the quiz export report (page mode, etc.) */
@@ -43,10 +43,10 @@ class quiz_exportattemptscsv_report extends quiz_attempts_report {
 
     /**
      * Override function to displays the report.
+     * @param $quiz this quiz.
      * @param $cm the course-module for this quiz.
      * @param $course the courses we are in.
-     * @param $quiz this quiz.
-     * @return nothing, print out the table as side-effect
+     * @return nothing, print out the table as side-effect.
      */
     public function display($quiz, $cm, $course) {
         global $OUTPUT;

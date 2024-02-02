@@ -43,10 +43,10 @@ if ($CFG->branch < 402 ) {
 class quiz_exportattemptscsv_settings_form extends mod_quiz_attempts_report_form {
 
     /**
-      * Define extended preference fields.
-      * @param object MoodleQuickForm $mform the wrapped MoodleQuickForm.
-      * @return nothing
-      */
+     * Define extended preference fields.
+     * @param object MoodleQuickForm $mform the wrapped MoodleQuickForm.
+     * @return nothing
+     */
     protected function other_preference_fields(MoodleQuickForm $mform) {
         $mform->addGroup([
             $mform->createElement('advcheckbox', 'qtext', '',
