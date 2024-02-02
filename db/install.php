@@ -16,15 +16,11 @@
 
 /**
  * Post-install script for the quiz attempts history export report.
- * @package   quiz_export_attemptscsv
+ * @package   quiz_exportattemptscsv
  * @copyright 2023 Sergio Rabellino - sergio.rabellino@unito.it
  * @copyright  based on work by 2013 Tim Hunt
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-
-defined('MOODLE_INTERNAL') || die();
-
 
 /**
  * Post-install script

@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Quiz export attempts history report version information.
+ * Quiz export attempts history as csv report version information.
  *
- * @package   quiz_export
+ * @package   quiz_exportattemptscsv
  * @copyright 2023 Sergio Rabellino - sergio.rabellino@unito.it
  * @copyright based on work by 2020 CBlue Srl
  * @copyright based on work by 2014 Johannes Burk
