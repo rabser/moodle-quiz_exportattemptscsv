@@ -15,24 +15,23 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Post-install script for the quiz attempts history export report.
+ * Define a view capability for this plugin
  * @package   quiz_exportattemptscsv
- * @copyright 2023 Sergio Rabellino - sergio.rabellino@unito.it
- * @copyright  based on work by 2013 Tim Hunt
+ * @copyright 2024 Sergio Rabellino - sergio.rabellino@unito.it
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$capabilities = array(
+$capabilities = [
     // Is the user allowed to download csv attempts file ?
-    'quiz/exportattemptscsv:download' => array(
+    'quiz/exportattemptscsv:download' => [
         'captype' => 'read',
         'contextlevel' => CONTEXT_MODULE,
-        'legacy' => array(
+        'legacy' => [
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW
-        ),
+        ],
         'clonepermissionsfrom' =>  'mod/quiz:viewreports'
-    )
+    ]
 );
