@@ -42,6 +42,10 @@ if ($CFG->branch < 402 ) {
  */
 class quiz_exportattemptscsv_settings_form extends mod_quiz_attempts_report_form {
 
+    /**
+      * Define extended preference fields.
+      * @param object MoodleQuickForm $mform the wrapped MoodleQuickForm.
+      */
     protected function other_preference_fields(MoodleQuickForm $mform) {
         $mform->addGroup([
             $mform->createElement('advcheckbox', 'qtext', '',
@@ -59,10 +63,16 @@ class quiz_exportattemptscsv_settings_form extends mod_quiz_attempts_report_form
         $mform->disabledIf('gdpr', 'attempts', 'eq', quiz_attempts_report::ENROLLED_WITHOUT);
     }
 
+    /**
+     * Preferences validation.
+     *
+     * @param  \stdClass $data Data to validate.
+     * @param  array $files Array of files.
+     * @return array of additional errors, or overridden errors.
+     */
     public function validation($data, $files) {
         $errors = parent::validation($data, $files);
 
         return $errors;
     }
-
 }

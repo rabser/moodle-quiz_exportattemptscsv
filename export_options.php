@@ -54,6 +54,10 @@ class quiz_exportattemptscsv_options extends mod_quiz_attempts_report_options {
     public $showgdpr = true;
 
 
+    /**
+     * Get the URL parameters required to show the report with these options.
+     * @return array URL parameter name => value.
+     */
     protected function get_url_params() {
         $params = parent::get_url_params();
         $params['qtext']      = $this->showqtext;
@@ -63,6 +67,9 @@ class quiz_exportattemptscsv_options extends mod_quiz_attempts_report_options {
         return $params;
     }
 
+    /**
+     * Get the current value of the settings to pass to the settings form.
+     */
     public function get_initial_form_data() {
         $toform = parent::get_initial_form_data();
         $toform->qtext      = $this->showqtext;
@@ -72,6 +79,10 @@ class quiz_exportattemptscsv_options extends mod_quiz_attempts_report_options {
         return $toform;
     }
 
+    /**
+     * Set the fields of this object from the form data.
+     * @param object $fromform The data from $mform->get_data() from the settings form.
+     */
     public function setup_from_form_data($fromform) {
         parent::setup_from_form_data($fromform);
         $this->showqtext     = $fromform->qtext;
@@ -80,6 +91,9 @@ class quiz_exportattemptscsv_options extends mod_quiz_attempts_report_options {
         $this->showgdpr     = $fromform->gdpr;
     }
 
+    /**
+     * Set the fields of this object from the URL parameters.
+     */
     public function setup_from_params() {
         parent::setup_from_params();
         $this->showqtext     = optional_param('qtext', $this->showqtext,     PARAM_BOOL);
@@ -98,6 +112,10 @@ class quiz_exportattemptscsv_options extends mod_quiz_attempts_report_options {
         $this->showgdpr     = get_user_preferences('quiz_report_responses_gdpr', $this->showgdpr);
     }
 
+    /**
+     * Set the fields of this object from the user's preferences.
+     * (For those settings that are backed by user-preferences).
+     */
     public function update_user_preferences() {
         parent::update_user_preferences();
 
@@ -107,7 +125,9 @@ class quiz_exportattemptscsv_options extends mod_quiz_attempts_report_options {
         set_user_preference('quiz_report_responses_gdpr', $this->showgdpr);
     }
 
-
+    /**
+     * Check the settings, and remove any 'impossible' combinations.
+     */
     public function resolve_dependencies() {
         $this->checkboxcolumn = true;
     }
