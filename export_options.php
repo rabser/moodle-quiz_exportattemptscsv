@@ -103,6 +103,10 @@ class quiz_exportattemptscsv_options extends mod_quiz_attempts_report_options {
 
     }
 
+    /**
+     * Set the fields of this object from the user's preferences.
+     * (For those settings that are backed by user-preferences).
+     */
     public function setup_from_user_preferences() {
         parent::setup_from_user_preferences();
 

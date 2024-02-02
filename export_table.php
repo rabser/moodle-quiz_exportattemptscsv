@@ -40,23 +40,22 @@ require_once($CFG->dirroot . '/mod/quiz/report/attemptsreport_table.php');
 class quiz_exportattemptscsv_table extends quiz_attempts_report_table {
 
     /**
-     * Class constructor.
+     * Constructor
+     * @param object $quiz
+     * @param context $context
+     * @param string $qmsubselect
+     * @param quiz_overview_options $options
+     * @param \core\dml\sql_join $groupstudentsjoins
+     * @param \core\dml\sql_join $studentsjoins
+     * @param array $questions
+     * @param moodle_url $reporturl
      */
     public function __construct($quiz, $context, $qmsubselect,
-                                quiz_exportattemptscsv_options $options, $groupstudents, $students, $questions, $reporturl) {
+                                quiz_exportattemptscsv_options $options, $groupstudentsjoins, $studentsjoins, $questions, $reporturl) {
         parent::__construct('mod-quiz-report-export-report', $quiz, $context,
-            $qmsubselect, $options, $groupstudents, $students, $questions, $reporturl);
+            $qmsubselect, $options, $groupstudentsjoins, $studentsjoins, $questions, $reporturl);
     }
 
-    /**
-     * Build the exported table.
-     */
-    public function build_table() {
-        // Strange: parent class quiz_attempts_report_table uses this property but doesn't define it.
-        // So we have to do it here... just for quiz_attempts_report::add_time_columns.
-        $this->strtimeformat = str_replace(',', ' ', get_string('strftimedatetime'));
-        parent::build_table();
-    }
     /**
      * Build the results table.
      */
