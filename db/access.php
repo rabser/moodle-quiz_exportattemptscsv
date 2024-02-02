@@ -34,4 +34,4 @@ $capabilities = [
         ],
         'clonepermissionsfrom' =>  'mod/quiz:viewreports'
     ]
-);
+];
