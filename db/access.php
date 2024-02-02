@@ -30,8 +30,8 @@ $capabilities = [
         'contextlevel' => CONTEXT_MODULE,
         'legacy' => [
             'teacher' => CAP_ALLOW,
-            'editingteacher' => CAP_ALLOW
+            'editingteacher' => CAP_ALLOW,
+            ],
+        'clonepermissionsfrom' => 'mod/quiz:viewreports',
         ],
-        'clonepermissionsfrom' =>  'mod/quiz:viewreports'
-    ]
-];
+    ];
