@@ -15,19 +15,24 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Quiz export attempts history as csv report version information.
- *
+ * Post-install script for the quiz attempts history export report.
  * @package   quiz_exportattemptscsv
  * @copyright 2023 Sergio Rabellino - sergio.rabellino@unito.it
- * @copyright based on work by 2020 CBlue Srl
- * @copyright based on work by 2014 Johannes Burk
+ * @copyright  based on work by 2013 Tim Hunt
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2024020200;
-$plugin->requires = 2020061500;
-$plugin->maturity = MATURITY_STABLE;
-$plugin->release = '1.0.3b (Build 2024020200)';
-$plugin->component = 'quiz_exportattemptscsv';
+$capabilities = array(
+    // Is the user allowed to download csv attempts file ?
+    'quiz/exportattemptscsv:download' => array(
+        'captype' => 'read',
+        'contextlevel' => CONTEXT_MODULE,
+        'legacy' => array(
+            'teacher' => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW
+        ),
+        'clonepermissionsfrom' =>  'mod/quiz:viewreports'
+    )
+);
