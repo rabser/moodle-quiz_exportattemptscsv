@@ -51,9 +51,11 @@ class quiz_exportattemptscsv_table extends quiz_attempts_report_table {
      * @param moodle_url $reporturl
      */
     public function __construct($quiz, $context, $qmsubselect,
-                                quiz_exportattemptscsv_options $options, $groupstudentsjoins, $studentsjoins, $questions, $reporturl) {
+                                quiz_exportattemptscsv_options $options,
+                                $groupstudentsjoins, $studentsjoins, $questions, $reporturl) {
         parent::__construct('mod-quiz-report-export-report', $quiz, $context,
-            $qmsubselect, $options, $groupstudentsjoins, $studentsjoins, $questions, $reporturl);
+                            $qmsubselect, $options, $groupstudentsjoins,
+                            $studentsjoins, $questions, $reporturl);
     }
 
     /**
