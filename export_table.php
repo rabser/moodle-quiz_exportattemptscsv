@@ -57,6 +57,6 @@ class quiz_exportattemptscsv_table extends quiz_attempts_report_table {
         echo '<input type="submit" id="exportattemptsbutton" name="export" value="' .
             get_string('exportselected', 'quiz_exportattemptscsv') . '"/>';
         $PAGE->requires->event_handler('#exportattemptsbutton', 'click', 'M.util.show_confirm_dialog',
-            array('message' => get_string('exportattemptcheck', 'quiz_exportattemptscsv')));
+            ['message' => get_string('exportattemptcheck', 'quiz_exportattemptscsv')]);
     }
 }

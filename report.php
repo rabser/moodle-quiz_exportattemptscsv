@@ -94,8 +94,8 @@ class quiz_exportattemptscsv_report extends quiz_attempts_report {
             $table->set_sql($fields, $from, $where, $params);
 
             // Define table columns.
-            $columns = array();
-            $headers = array();
+            $columns = [];
+            $headers = [];
 
             if (!$table->is_downloading() && $this->options->checkboxcolumn) {
                 $columnname = 'checkbox';
@@ -132,7 +132,7 @@ class quiz_exportattemptscsv_report extends quiz_attempts_report {
             if (optional_param('export', 0, PARAM_BOOL) && confirm_sesskey()) {
                 raise_memory_limit(MEMORY_HUGE);
                 set_time_limit(600);
-                if ($attemptids = optional_param_array('attemptid', array(), PARAM_INT)) {
+                if ($attemptids = optional_param_array('attemptid', [], PARAM_INT)) {
                     $this->export_attempts($quiz, $cm, $attemptids, $allowed);
                     redirect($redirecturl);
                 }
@@ -253,7 +253,7 @@ class quiz_exportattemptscsv_report extends quiz_attempts_report {
 
         fputcsv ($csvfile, array_map(fn($v) => $v.' ', $header));
 
-        // For MySQL/MariaDB set first rownumber to zero
+        // For MySQL/MariaDB set first rownumber to zero.
         if ($sqlsetrownumber != "") {
             $DB->execute($sqlsetrownumber);
         }

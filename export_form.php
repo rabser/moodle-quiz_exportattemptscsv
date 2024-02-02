@@ -43,7 +43,7 @@ if ($CFG->branch < 402 ) {
 class quiz_exportattemptscsv_settings_form extends mod_quiz_attempts_report_form {
 
     protected function other_preference_fields(MoodleQuickForm $mform) {
-        $mform->addGroup(array(
+        $mform->addGroup([
             $mform->createElement('advcheckbox', 'qtext', '',
                 get_string('questiontext', 'quiz_responses')),
             $mform->createElement('advcheckbox', 'resp', '',
@@ -52,7 +52,7 @@ class quiz_exportattemptscsv_settings_form extends mod_quiz_attempts_report_form
                 get_string('rightanswer', 'quiz_responses')),
             $mform->createElement('advcheckbox', 'gdpr', '',
                 get_string('gdprready', 'quiz_exportattemptscsv')),
-        ), 'coloptions', get_string('showthe', 'quiz_responses'), array(' '), false);
+        ], 'coloptions', get_string('showthe', 'quiz_responses'), [' '], false);
         $mform->disabledIf('qtext', 'attempts', 'eq', quiz_attempts_report::ENROLLED_WITHOUT);
         $mform->disabledIf('resp',  'attempts', 'eq', quiz_attempts_report::ENROLLED_WITHOUT);
         $mform->disabledIf('right', 'attempts', 'eq', quiz_attempts_report::ENROLLED_WITHOUT);

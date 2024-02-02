@@ -16,7 +16,7 @@
 
 /**
  * Post-install script for the quiz attempts history export report.
- * @package   quiz_export_attemtscsv
+ * @package   quiz_export_attemptscsv
  * @copyright 2023 Sergio Rabellino - sergio.rabellino@unito.it
  * @copyright  based on work by 2013 Tim Hunt
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
