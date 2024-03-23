@@ -182,9 +182,9 @@ class quiz_exportattemptscsv_report extends quiz_attempts_report {
         }
 
         if ( $this->options->showgdpr ) {
-            $sqlquizattemptsdetails .= " user.username,
-                                         user.firstname,
-                                         user.lastname,";
+            $sqlquizattemptsdetails .= " usertable.username,
+                                         usertable.firstname,
+                                         usertable.lastname,";
         }
         $sqlquizattemptsdetails .= " quiza.quiz,
                                      quiza.id AS quizattemptid,
@@ -219,7 +219,7 @@ class quiz_exportattemptscsv_report extends quiz_attempts_report {
                                      JOIN {question_usages} qu ON qu.id = quiza.uniqueid
                                      JOIN {question_attempts} qa ON qa.questionusageid = qu.id
                                      JOIN {question_attempt_steps} qas ON qas.questionattemptid = qa.id
-                                     JOIN {user} user ON user.id = quiza.userid
+                                     JOIN {user} usertable ON usertable.id = quiza.userid
                                      LEFT JOIN {question_attempt_step_data} qasd ON qasd.attemptstepid = qas.id
                                      WHERE quiza.id = ?
                                      ORDER BY quiza.userid, quiza.attempt, qa.slot, qas.sequencenumber, qasd.name ";
