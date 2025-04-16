@@ -18,7 +18,7 @@
  * This file defines the setting form for the quiz export attempts history report.
  *
  * @package   quiz_exportattemptscsv
- * @copyright 2023 Sergio Rabellino - sergio.rabellino@unito.it
+ * @copyright 2023-2025 Sergio Rabellino - sergio.rabellino@unito.it
  * @copyright based on work by 2014 Johannes Burk
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -26,10 +26,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-// Only required if Moodle < 4.2 Release.
-if ($CFG->branch < 402 ) {
-    require_once($CFG->dirroot . '/mod/quiz/report/attemptsreport_form.php');
-}
+use mod_quiz\local\reports\attempts_report;
+use mod_quiz\local\reports\attempts_report_options_form;
 
 
 /**
@@ -40,7 +38,7 @@ if ($CFG->branch < 402 ) {
  * @copyright 2014 Johannes Burk
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class quiz_exportattemptscsv_settings_form extends mod_quiz_attempts_report_form {
+class quiz_exportattemptscsv_settings_form extends attempts_report_options_form {
 
     /**
      * Define extended preference fields.
@@ -57,10 +55,10 @@ class quiz_exportattemptscsv_settings_form extends mod_quiz_attempts_report_form
             $mform->createElement('advcheckbox', 'gdpr', '',
                 get_string('gdprready', 'quiz_exportattemptscsv')),
         ], 'coloptions', get_string('showthe', 'quiz_responses'), [' '], false);
-        $mform->disabledIf('qtext', 'attempts', 'eq', quiz_attempts_report::ENROLLED_WITHOUT);
-        $mform->disabledIf('resp',  'attempts', 'eq', quiz_attempts_report::ENROLLED_WITHOUT);
-        $mform->disabledIf('right', 'attempts', 'eq', quiz_attempts_report::ENROLLED_WITHOUT);
-        $mform->disabledIf('gdpr', 'attempts', 'eq', quiz_attempts_report::ENROLLED_WITHOUT);
+        $mform->disabledIf('qtext', 'attempts', 'eq', attempts_report::ENROLLED_WITHOUT);
+        $mform->disabledIf('resp',  'attempts', 'eq', attempts_report::ENROLLED_WITHOUT);
+        $mform->disabledIf('right', 'attempts', 'eq', attempts_report::ENROLLED_WITHOUT);
+        $mform->disabledIf('gdpr', 'attempts', 'eq', attempts_report::ENROLLED_WITHOUT);
     }
 
     /**

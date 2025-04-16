@@ -27,16 +27,19 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot . '/mod/quiz/locallib.php');
-require_once($CFG->dirroot . '/mod/quiz/report/attemptsreport.php');
+use mod_quiz\local\reports\attempts_report;
+use mod_quiz\question\bank\qbank_helper;
+use mod_quiz\quiz_attempt;
+
 require_once($CFG->dirroot . '/mod/quiz/report/exportattemptscsv/export_form.php');
 require_once($CFG->dirroot . '/mod/quiz/report/exportattemptscsv/export_options.php');
 require_once($CFG->dirroot . '/mod/quiz/report/exportattemptscsv/export_table.php');
 
+
 /**
  * Class to implement the report composition.
  */
-class quiz_exportattemptscsv_report extends quiz_attempts_report {
+class quiz_exportattemptscsv_report extends attempts_report {
 
     /** @var object Store options for the quiz export report (page mode, etc.) */
     private $options;
