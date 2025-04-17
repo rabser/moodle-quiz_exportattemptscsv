@@ -26,9 +26,11 @@
 
 $string['exportattempt'] = 'Salva tentativi';
 $string['exportattemptcheck'] = 'Salvo lo storico delle risposte per i tentativi selezionati?';
-$string['exportattemptscsv'] = 'Salva lo storico delle risposte come CSV'; 
+$string['exportattemptscsv'] = 'Salva lo storico delle risposte come CSV';
 $string['exportselected'] = 'Salva lo storico delle risposte dei tentativi selezionati come CSV';
 $string['gdprready'] = 'Esporta dati personali';
+$string['pluginname'] = 'QuizExportAttemptsCsv';
+$string['privacy:metadata'] = 'Questo Quiz  Report consente solo il download dei tentativi esistenti.';
 $string['qaflagged'] = 'Tentativo segnalato';
 $string['qamaxmark'] = 'Punteggio max domanda';
 $string['qaminfraction'] = 'Frazione minima domanda';
@@ -48,7 +50,4 @@ $string['quizattempt'] = 'Tentativo #';
 $string['quizattemptid'] = 'ID Tentativo';
 $string['quizasumgrades'] = 'Somma valutazioni tentativo';
 $string['quizid'] = 'ID Quiz';
-$string['pluginname'] = 'QuizExportAttemptsCsv';
-$string['privacy:metadata'] = 'Questo Quiz  Report consente solo il download dei tentativi esistenti.';
 $string['seq'] = '#';
-
