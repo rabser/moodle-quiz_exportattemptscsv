@@ -24,26 +24,26 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['exportattemptscsv'] = 'Export Attempts history as CSV';
 $string['exportattempt'] = 'Export attempt';
 $string['exportattemptcheck'] = 'Export history for selected attempts?';
+$string['exportattemptscsv'] = 'Export Attempts history as CSV';
 $string['exportselected'] = 'Export selected attempts history as CSV';
-$string['qaflagged'] = 'Attempt flagged';
 $string['gdprready'] = 'Export personal information';
+$string['qaflagged'] = 'Attempt flagged';
 $string['qamaxmark'] = 'Question max mark';
 $string['qaminfraction'] = 'Question min fraction';
 $string['qaqtext'] = 'Question text';
 $string['qaquestionid'] = 'Question ID';
 $string['qaresponses'] = 'Attempt response';
 $string['qarightanswer'] = 'Attempt right answer';
-$string['qaslot'] = 'Quiz attempt slot';
+$string['qasdname'] = 'Attempt step name';
 $string['qasfraction'] = 'Attempt step fraction';
+$string['qaslot'] = 'Quiz attempt slot';
 $string['qassequencenumber'] = 'Attempt step seq #';
 $string['qasstate'] = 'Attempt step state';
 $string['qastimecreated'] = 'Attempt step time';
 $string['qasuserid'] = 'Attempt step user ID';
 $string['qavariant'] = 'Question variant';
-$string['qasdname'] = 'Attempt step name';
 $string['quizattemptid'] = 'Attempt ID';
 $string['quizattempt'] = 'Attempt #';
 $string['quizasumgrades'] = 'Attempt sum grades';
