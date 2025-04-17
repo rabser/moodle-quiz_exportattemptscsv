@@ -28,6 +28,8 @@ use mod_quiz\local\reports\attempts_report;
 use mod_quiz\question\bank\qbank_helper;
 use mod_quiz\quiz_attempt;
 
+defined('MOODLE_INTERNAL') || die();
+
 require_once($CFG->dirroot . '/mod/quiz/report/exportattemptscsv/export_form.php');
 require_once($CFG->dirroot . '/mod/quiz/report/exportattemptscsv/export_options.php');
 require_once($CFG->dirroot . '/mod/quiz/report/exportattemptscsv/export_table.php');
