@@ -23,9 +23,6 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
-defined('MOODLE_INTERNAL') || die();
-
 use mod_quiz\local\reports\attempts_report_table;
 use mod_quiz\quiz_attempt;
 
