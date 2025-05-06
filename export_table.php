@@ -18,16 +18,13 @@
  * This file defines the quiz attempts history table.
  *
  * @package   quiz_exportattemptscsv
- * @copyright 2023 Sergio Rabellino
+ * @copyright 2023-2025 Sergio Rabellino
  * @copyright based on work by 2014 Johannes Burk
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
-defined('MOODLE_INTERNAL') || die();
-
-require_once($CFG->dirroot . '/mod/quiz/report/attemptsreport_table.php');
-
+use mod_quiz\local\reports\attempts_report_table;
+use mod_quiz\quiz_attempt;
 
 /**
  * This is a table subclass for displaying the quiz export attempts history report.
@@ -37,18 +34,18 @@ require_once($CFG->dirroot . '/mod/quiz/report/attemptsreport_table.php');
  * @copyright based on work by 2014 Johannes Burk
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class quiz_exportattemptscsv_table extends quiz_attempts_report_table {
+class quiz_exportattemptscsv_table extends attempts_report_table {
 
     /**
      * Constructor
-     * @param object $quiz the quiz settings
-     * @param context $context the context object
-     * @param string $qmsubselect HTML fragment to select the first/best/last attempt, if appropriate
-     * @param quiz_exportattemptscsv_options $options the quiz export attemts csv settings
-     * @param \core\dml\sql_join $groupstudentsjoins to indicate a set of groups
-     * @param \core\dml\sql_join $studentsjoins to indicate a set of users
-     * @param array $questions an array of question objects
-     * @param moodle_url $reporturl the URL of this report
+     * @param object $quiz
+     * @param context $context
+     * @param string $qmsubselect
+     * @param quiz_exportattemptscsv_options $options
+     * @param \core\dml\sql_join $groupstudentsjoins
+     * @param \core\dml\sql_join $studentsjoins
+     * @param array $questions
+     * @param moodle_url $reporturl
      */
     public function __construct($quiz, $context, $qmsubselect,
                                 quiz_exportattemptscsv_options $options,

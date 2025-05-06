@@ -18,7 +18,7 @@
  * Quiz export attempts history as csv report version information.
  *
  * @package   quiz_exportattemptscsv
- * @copyright 2023 Sergio Rabellino - sergio.rabellino@unito.it
+ * @copyright 2023-2025 Sergio Rabellino - sergio.rabellino@unito.it
  * @copyright based on work by 2020 CBlue Srl
  * @copyright based on work by 2014 Johannes Burk
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -26,8 +26,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2024032400;
-$plugin->requires = 2020061500;
+$plugin->version = 2025041700;
+$plugin->requires = 2024092700; // Moodle 4.5 !
 $plugin->maturity = MATURITY_STABLE;
-$plugin->release = '1.0.3c (Build 2024032400)';
+$plugin->release = '1.0.5b (Build 2025050600)';
 $plugin->component = 'quiz_exportattemptscsv';
+$plugin->supported = [405, 405];

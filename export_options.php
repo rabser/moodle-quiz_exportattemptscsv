@@ -18,17 +18,14 @@
  * This file defines the class to store the options for the quiz export attempts history report
  *
  * @package   quiz_exportattemptscsv
- * @copyright 2023 Sergio Rabellino - sergio.rabellino@unito.it
+ * @copyright 2023-2025 Sergio Rabellino - sergio.rabellino@unito.it
  * @copyright based on work by 2020 CBlue Srl
  * @copyright based on work by 2014 Johannes Burk
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
-defined('MOODLE_INTERNAL') || die();
-
-require_once($CFG->dirroot . '/mod/quiz/report/attemptsreport_options.php');
-
+use mod_quiz\local\reports\attempts_report;
+use mod_quiz\local\reports\attempts_report_options;
 
 /**
  * Class to store the options for the quiz export report.
@@ -39,7 +36,7 @@ require_once($CFG->dirroot . '/mod/quiz/report/attemptsreport_options.php');
  * @copyright based on work by 2014 Johannes Burk
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class quiz_exportattemptscsv_options extends mod_quiz_attempts_report_options {
+class quiz_exportattemptscsv_options extends attempts_report_options {
 
     /** @var bool whether to show the question text columns. */
     public $showqtext = false;
