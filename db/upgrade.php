@@ -17,25 +17,31 @@
 /**
  * Post-install script for the quiz attempts history export report.
  * @package   quiz_exportattemptscsv
- * @copyright 2023 Sergio Rabellino - sergio.rabellino@unito.it
+ * @copyright 2026 Sergio Rabellino - sergio.rabellino@unito.it
  * @copyright  based on work by 2013 Tim Hunt
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 /**
- * Post-install script
+ * Quiz exportattemptscsv report upgrade code.
  */
-function xmldb_quiz_exportattemptscsv_install() {
+function xmldb_quiz_exportattemptscsv_upgrade($oldversion) {
     global $DB;
+    $dbman = $DB->get_manager();
 
-    $record = new stdClass();
-    $record->name         = 'exportattemptscsv';
-    $record->displayorder = '10000';
-    $record->capability = 'quiz/exportattemptscsv:download';
-
-    if ($dbman->table_exists('quiz_reports')) {
-        $DB->insert_record('quiz_reports', $record);
-    } else {
-        $DB->insert_record('quiz_report', $record);
+    if ($oldversion < 2026073001) {
+        // Add the missing capability
+        if ($dbman->table_exists('quiz_reports')) {
+            $record = $DB->get_record('quiz_reports', array('name' => 'exportattemptscsv'));
+            $record->capability = 'quiz/exportattemptscsv:download';
+            $DB->update_record('quiz_reports', $record);
+        } else {
+            $record = $DB->get_record('quiz_report', array('name' => 'exportattemptscsv'));
+            $record->capability = 'quiz/exportattemptscsv:download';
+            $DB->update_record('quiz_report', $record);
+        }
+        upgrade_plugin_savepoint(true, 2026073001, 'quizreport', 'exportattemptscsv');
     }
+
+    return true;
 }
