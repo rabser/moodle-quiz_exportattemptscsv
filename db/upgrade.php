@@ -30,13 +30,13 @@ function xmldb_quiz_exportattemptscsv_upgrade($oldversion) {
     $dbman = $DB->get_manager();
 
     if ($oldversion < 2026073001) {
-        // Add the missing capability
+        // Add the missing capability.
         if ($dbman->table_exists('quiz_reports')) {
-            $record = $DB->get_record('quiz_reports', array('name' => 'exportattemptscsv'));
+            $record = $DB->get_record('quiz_reports', ['name' => 'exportattemptscsv']);
             $record->capability = 'quiz/exportattemptscsv:download';
             $DB->update_record('quiz_reports', $record);
         } else {
-            $record = $DB->get_record('quiz_report', array('name' => 'exportattemptscsv'));
+            $record = $DB->get_record('quiz_report', ['name' => 'exportattemptscsv']);
             $record->capability = 'quiz/exportattemptscsv:download';
             $DB->update_record('quiz_report', $record);
         }

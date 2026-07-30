@@ -39,7 +39,6 @@ require_once($CFG->dirroot . '/mod/quiz/report/exportattemptscsv/export_table.ph
  * Class to implement the report composition.
  */
 class quiz_exportattemptscsv_report extends attempts_report {
-
     /** @var object Store options for the quiz export report (page mode, etc.) */
     private $options;
 
@@ -53,7 +52,7 @@ class quiz_exportattemptscsv_report extends attempts_report {
         global $OUTPUT;
 
         // This inits the quiz_attempts_report (parent class) functionality.
-        list($currentgroup, $students, $groupstudents, $allowed) =
+        [$currentgroup, $students, $groupstudents, $allowed] =
             $this->init('exportattemptscsv', 'quiz_exportattemptscsv_settings_form', $quiz, $cm, $course);
 
         // This creates a new options object and ...
@@ -69,8 +68,16 @@ class quiz_exportattemptscsv_report extends attempts_report {
 
         $questions = quiz_report_get_significant_questions($quiz);
 
-        $table = new quiz_exportattemptscsv_table($quiz, $this->context, $this->qmsubselect,
-            $this->options, $groupstudents, $students, $questions, $this->options->get_url());
+        $table = new quiz_exportattemptscsv_table(
+            $quiz,
+            $this->context,
+            $this->qmsubselect,
+            $this->options,
+            $groupstudents,
+            $students,
+            $questions,
+            $this->options->get_url()
+        );
 
         // Process actions.
         $this->process_actions($quiz, $cm, $currentgroup, $groupstudents, $allowed, $this->options->get_url());
@@ -101,7 +108,7 @@ class quiz_exportattemptscsv_report extends attempts_report {
 
         $hasstudents = $students && (!$currentgroup || $groupstudents);
         if ($hasquestions && ($hasstudents || $this->options->attempts == self::ALL_WITH)) {
-            list($fields, $from, $where, $params) = $table->base_sql($allowed);
+            [$fields, $from, $where, $params] = $table->base_sql($allowed);
 
             $table->set_sql($fields, $from, $where, $params);
 
@@ -157,7 +164,8 @@ class quiz_exportattemptscsv_report extends attempts_report {
                           WHERE quiza.quiz = :quizid
                             AND quiza.id $asql
                             AND {$allowed->wheres}",
-                        array_merge(['quizid' => $quiz->id], $aparams, $allowed->params));
+                        array_merge(['quizid' => $quiz->id], $aparams, $allowed->params)
+                    );
                     if ($valid) {
                         $this->export_attempts($quiz, $cm, $valid, $allowed);
                     }
@@ -202,7 +210,7 @@ class quiz_exportattemptscsv_report extends attempts_report {
                                               (@row_number:=@row_number + 1) AS num,";
         }
 
-        if ( $this->options->showgdpr ) {
+        if ($this->options->showgdpr) {
             $sqlquizattemptsdetails .= " usertable.username,
                                          usertable.firstname,
                                          usertable.lastname,";
@@ -222,16 +230,16 @@ class quiz_exportattemptscsv_report extends attempts_report {
                                      qas.fraction,
                                      qas.timecreated,";
 
-        if ( $this->options->showgdpr ) {
+        if ($this->options->showgdpr) {
             $sqlquizattemptsdetails .= "qas.userid,";
         }
-        if ( $this->options->showright ) {
+        if ($this->options->showright) {
             $sqlquizattemptsdetails .= "qa.rightanswer,";
         }
-        if ( $this->options->showqtext ) {
+        if ($this->options->showqtext) {
             $sqlquizattemptsdetails .= "qa.questionsummary,";
         }
-        if ( $this->options->showresponses ) {
+        if ($this->options->showresponses) {
             $sqlquizattemptsdetails .= "qa.responsesummary,";
         }
 
@@ -247,7 +255,7 @@ class quiz_exportattemptscsv_report extends attempts_report {
         $csvfile = fopen($tmpcsvfile, 'w');
 
         $header[] = get_string('seq', 'quiz_exportattemptscsv');
-        if ( $this->options->showgdpr ) {
+        if ($this->options->showgdpr) {
             $header[] = get_string('username');
             $header[] = get_string('firstname');
             $header[] = get_string('lastname');
@@ -266,17 +274,17 @@ class quiz_exportattemptscsv_report extends attempts_report {
         $header[] = get_string('qasstate', 'quiz_exportattemptscsv');
         $header[] = get_string('qasfraction', 'quiz_exportattemptscsv');
         $header[] = get_string('qastimecreated', 'quiz_exportattemptscsv');
-        if ( $this->options->showgdpr ) {
+        if ($this->options->showgdpr) {
             $header[] = get_string('qasuserid', 'quiz_exportattemptscsv');
         }
 
-        if ( $this->options->showright ) {
+        if ($this->options->showright) {
             $header[] = get_string('qarightanswer', 'quiz_exportattemptscsv');
         }
-        if ( $this->options->showqtext ) {
+        if ($this->options->showqtext) {
             $header[] = get_string('qaqtext', 'quiz_exportattemptscsv');
         }
-        if ( $this->options->showresponses ) {
+        if ($this->options->showresponses) {
             $header[] = get_string('qaresponses', 'quiz_exportattemptscsv');
         }
 
@@ -310,7 +318,7 @@ class quiz_exportattemptscsv_report extends attempts_report {
                     AND {$allowed->wheres}",
                 array_merge(['quizid' => $quiz->id], $aparams, $allowed->params));
             if ($valid) {
-                $params = [$attemptid,$quiz->id];
+                $params = [$attemptid, $quiz->id];
                 $quizattemptdetailsrs = $DB->get_records_sql($sqlquizattemptsdetails, $params);
 
                 foreach ($quizattemptdetailsrs as $quizattemptdetails) {
@@ -323,7 +331,7 @@ class quiz_exportattemptscsv_report extends attempts_report {
         }
 
         header("Content-Type: text/csv; charset=UTF-8");
-        header("Content-Disposition: attachment; filename=\"quiz_exportattempts_".$quiz->id.".csv\"");
+        header("Content-Disposition: attachment; filename=\"quiz_exportattempts_" . $quiz->id . ".csv\"");
         readfile($tmpcsvfile);
 
         unlink($tmpcsvfile);

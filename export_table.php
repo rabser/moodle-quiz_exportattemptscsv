@@ -30,12 +30,11 @@ use mod_quiz\quiz_attempt;
  * This is a table subclass for displaying the quiz export attempts history report.
  *
  * @package   quiz_exportattemptscsv
- * @copyright 2023 Sergio Rabellino
+ * @copyright 2026 Sergio Rabellino
  * @copyright based on work by 2014 Johannes Burk
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class quiz_exportattemptscsv_table extends attempts_report_table {
-
     /**
      * Constructor
      * @param object $quiz
@@ -47,12 +46,27 @@ class quiz_exportattemptscsv_table extends attempts_report_table {
      * @param array $questions
      * @param moodle_url $reporturl
      */
-    public function __construct($quiz, $context, $qmsubselect,
+    public function __construct(
+                                $quiz,
+                                $context,
+                                $qmsubselect,
                                 quiz_exportattemptscsv_options $options,
-                                $groupstudentsjoins, $studentsjoins, $questions, $reporturl) {
-        parent::__construct('mod-quiz-report-export-report', $quiz, $context,
-                            $qmsubselect, $options, $groupstudentsjoins,
-                            $studentsjoins, $questions, $reporturl);
+                                $groupstudentsjoins,
+                                $studentsjoins,
+                                $questions,
+                                $reporturl
+                               ) {
+        parent::__construct(
+                            'mod-quiz-report-export-report',
+                            $quiz,
+                            $context,
+                            $qmsubselect,
+                            $options,
+                            $groupstudentsjoins,
+                            $studentsjoins,
+                            $questions,
+                            $reporturl
+                           );
     }
 
     /**
