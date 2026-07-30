@@ -18,7 +18,7 @@
  * This file defines the class to store the options for the quiz export attempts history report
  *
  * @package   quiz_exportattemptscsv
- * @copyright 2023-2025 Sergio Rabellino - sergio.rabellino@unito.it
+ * @copyright 2023-2026 Sergio Rabellino - sergio.rabellino@unito.it
  * @copyright based on work by 2020 CBlue Srl
  * @copyright based on work by 2014 Johannes Burk
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -37,7 +37,6 @@ use mod_quiz\local\reports\attempts_report_options;
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class quiz_exportattemptscsv_options extends attempts_report_options {
-
     /** @var bool whether to show the question text columns. */
     public $showqtext = false;
 
@@ -60,7 +59,7 @@ class quiz_exportattemptscsv_options extends attempts_report_options {
         $params['qtext']      = $this->showqtext;
         $params['resp']       = $this->showresponses;
         $params['right']      = $this->showright;
-        $params['gdpr']      = $this->showgdpr;
+        $params['gdpr']       = $this->showgdpr;
         return $params;
     }
 
@@ -72,7 +71,7 @@ class quiz_exportattemptscsv_options extends attempts_report_options {
         $toform->qtext      = $this->showqtext;
         $toform->resp       = $this->showresponses;
         $toform->right      = $this->showright;
-        $toform->gdpr      = $this->gdpr;
+        $toform->gdpr       = $this->showgdpr;
         return $toform;
     }
 
@@ -85,7 +84,7 @@ class quiz_exportattemptscsv_options extends attempts_report_options {
         $this->showqtext     = $fromform->qtext;
         $this->showresponses = $fromform->resp;
         $this->showright     = $fromform->right;
-        $this->showgdpr     = $fromform->gdpr;
+        $this->showgdpr      = $fromform->gdpr;
     }
 
     /**
@@ -93,11 +92,10 @@ class quiz_exportattemptscsv_options extends attempts_report_options {
      */
     public function setup_from_params() {
         parent::setup_from_params();
-        $this->showqtext     = optional_param('qtext', $this->showqtext,     PARAM_BOOL);
-        $this->showresponses = optional_param('resp',  $this->showresponses, PARAM_BOOL);
-        $this->showright     = optional_param('right', $this->showright,     PARAM_BOOL);
-        $this->showgdpr     = optional_param('gdpr', $this->showgdpr,     PARAM_BOOL);
-
+        $this->showqtext     = optional_param('qtext', $this->showqtext, PARAM_BOOL);
+        $this->showresponses = optional_param('resp', $this->showresponses, PARAM_BOOL);
+        $this->showright     = optional_param('right', $this->showright, PARAM_BOOL);
+        $this->showgdpr      = optional_param('gdpr', $this->showgdpr, PARAM_BOOL);
     }
 
     /**
@@ -107,10 +105,10 @@ class quiz_exportattemptscsv_options extends attempts_report_options {
     public function setup_from_user_preferences() {
         parent::setup_from_user_preferences();
 
-        $this->showqtext     = get_user_preferences('quiz_report_responses_qtext', $this->showqtext);
-        $this->showresponses = get_user_preferences('quiz_report_responses_resp',  $this->showresponses);
-        $this->showright     = get_user_preferences('quiz_report_responses_right', $this->showright);
-        $this->showgdpr     = get_user_preferences('quiz_report_responses_gdpr', $this->showgdpr);
+        $this->showqtext     = get_user_preferences('quiz_exportattemptscsv_qtext', $this->showqtext);
+        $this->showresponses = get_user_preferences('quiz_exportattemptscsv_resp', $this->showresponses);
+        $this->showright     = get_user_preferences('quiz_exportattemptscsv_right', $this->showright);
+        $this->showgdpr      = get_user_preferences('quiz_exportattemptscsv_gdpr', $this->showgdpr);
     }
 
     /**
@@ -120,10 +118,10 @@ class quiz_exportattemptscsv_options extends attempts_report_options {
     public function update_user_preferences() {
         parent::update_user_preferences();
 
-        set_user_preference('quiz_report_responses_qtext', $this->showqtext);
-        set_user_preference('quiz_report_responses_resp',  $this->showresponses);
-        set_user_preference('quiz_report_responses_right', $this->showright);
-        set_user_preference('quiz_report_responses_gdpr', $this->showgdpr);
+        set_user_preference('quiz_exportattemptscsv_qtext', $this->showqtext);
+        set_user_preference('quiz_exportattemptscsv_resp', $this->showresponses);
+        set_user_preference('quiz_exportattemptscsv_right', $this->showright);
+        set_user_preference('quiz_exportattemptscsv_gdpr', $this->showgdpr);
     }
 
     /**

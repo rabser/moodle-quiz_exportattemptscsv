@@ -12,7 +12,7 @@ Obviously, the report information could be critical data from privacy point of v
 
 ## Installation and set-up
 
-This plugin should be compatible with Moodle 3.11+
+This plugin should be compatible with Moodle 4.5
 
 ### Install using git
 
