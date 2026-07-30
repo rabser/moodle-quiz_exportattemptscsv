@@ -46,7 +46,7 @@ function xmldb_quiz_exportattemptscsv_upgrade($oldversion) {
             $record->capability = 'quiz/exportattemptscsv:download';
             $DB->update_record('quiz_report', $record);
         }
-        upgrade_plugin_savepoint(true, 2026073000, 'quizreport', 'exportattemptscsv');
+        upgrade_plugin_savepoint(true, 2026073000, 'quiz', 'exportattemptscsv');
     }
 
     return true;
