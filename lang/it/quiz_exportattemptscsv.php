@@ -27,6 +27,7 @@
 $string['exportattempt'] = 'Salva tentativi';
 $string['exportattemptcheck'] = 'Salvo lo storico delle risposte per i tentativi selezionati?';
 $string['exportattemptscsv'] = 'Salva lo storico delle risposte come CSV';
+$string['exportattemptscsv:download'] = 'Salva lo storico delle risposte come CSV';
 $string['exportselected'] = 'Salva lo storico delle risposte dei tentativi selezionati come CSV';
 $string['gdprready'] = 'Esporta dati personali';
 $string['pluginname'] = 'QuizExportAttemptsCsv';
