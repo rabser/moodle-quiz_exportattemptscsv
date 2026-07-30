@@ -25,6 +25,7 @@
  */
 
 $string['pluginname'] = 'QuizExportAttemptsCsv';
+$string['exportattemptscsv:download'] = 'Export Attempts history as CSV'; // Displayed in the navigation menu.
 $string['exportattemptscsv'] = 'Export Attempts history as CSV'; // Displayed in the navigation menu.
 $string['exportselected'] = 'Export selected attempts history as CSV';
 $string['exportattemptcheck'] = 'Export history for selected attempts?';
