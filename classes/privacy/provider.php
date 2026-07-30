@@ -25,19 +25,36 @@
 namespace quiz_exportattemptscsv\privacy;
 
 /**
- * Class to implement null provider for privacy.
+ * Class to implement user-preference provider and declare the preference(s) the plugin owns.
  */
 class provider implements
-    // This plugin does not store any personal user data.
-    \core_privacy\local\metadata\null_provider {
+    \core_privacy\local\metadata\provider,
+    \core_privacy\local\request\user_preference_provider {
+    /**
+     * Returns meta data about this system.
+     *
+     * @param  collection $collection The initialised item collection to add items to.
+     * @return collection A listing of user data stored through this system.
+     */
+    public static function get_metadata(collection $collection): collection {
+        $collection->add_user_preference('quiz_exportattemptscsv_gdpr', 'privacy:preference:gdpr');
+        return $collection;
+    }
 
     /**
-     * Get the language string identifier with the component's language
-     * file to explain why this plugin stores no data.
+     * Store all user preferences for the plugin.
      *
-     * @return  string
+     * @param  int $userid The userid of the user whose data is to be exported.
      */
-    public static function get_reason(): string {
-        return 'privacy:metadata';
+    public static function export_user_preferences(int $userid) {
+        $pref = get_user_preferences('quiz_exportattemptscsv_gdpr', null, $userid);
+        if ($pref !== null) {
+            writer::export_user_preference(
+                'quiz_exportattemptscsv',
+                'gdpr',
+                transform::yesno($pref),
+                get_string('privacy:preference:gdpr', 'quiz_exportattemptscsv')
+            );
+        }
     }
 }
