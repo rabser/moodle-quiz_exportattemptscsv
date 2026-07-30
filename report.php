@@ -300,7 +300,7 @@ class quiz_exportattemptscsv_report extends attempts_report {
             return $v;
         };
 
-        fputcsv($csvfile, array_map($harden, (array)$header));
+        fputcsv($csvfile, array_map($harden, (array)$header), escape: "");
 
         // For MySQL/MariaDB set first rownumber to zero.
         if ($sqlsetrownumber != "") {
@@ -316,7 +316,8 @@ class quiz_exportattemptscsv_report extends attempts_report {
                   WHERE quiza.quiz = :quizid
                     AND quiza.id $asql
                     AND {$allowed->wheres}",
-                array_merge(['quizid' => $quiz->id], $aparams, $allowed->params));
+                array_merge(['quizid' => $quiz->id], $aparams, $allowed->params)
+            );
             if ($valid) {
                 $params = [$attemptid, $quiz->id];
                 $quizattemptdetailsrs = $DB->get_records_sql($sqlquizattemptsdetails, $params);
@@ -325,7 +326,7 @@ class quiz_exportattemptscsv_report extends attempts_report {
                     // Convert UNIXTIME to readable format.
                     $quizattemptdetails->timecreated = userdate($quizattemptdetails->timecreated);
                     // Save record to CSV file.
-                    fputcsv($csvfile, array_map($harden, (array)$quizattemptdetails));
+                    fputcsv($csvfile, array_map($harden, (array)$quizattemptdetails), escape: "");
                 }
             }
         }

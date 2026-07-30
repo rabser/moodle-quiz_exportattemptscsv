@@ -47,26 +47,26 @@ class quiz_exportattemptscsv_table extends attempts_report_table {
      * @param moodle_url $reporturl
      */
     public function __construct(
-                                $quiz,
-                                $context,
-                                $qmsubselect,
-                                quiz_exportattemptscsv_options $options,
-                                $groupstudentsjoins,
-                                $studentsjoins,
-                                $questions,
-                                $reporturl
-                               ) {
+        $quiz,
+        $context,
+        $qmsubselect,
+        quiz_exportattemptscsv_options $options,
+        $groupstudentsjoins,
+        $studentsjoins,
+        $questions,
+        $reporturl
+    ) {
         parent::__construct(
-                            'mod-quiz-report-export-report',
-                            $quiz,
-                            $context,
-                            $qmsubselect,
-                            $options,
-                            $groupstudentsjoins,
-                            $studentsjoins,
-                            $questions,
-                            $reporturl
-                           );
+            'mod-quiz-report-export-report',
+            $quiz,
+            $context,
+            $qmsubselect,
+            $options,
+            $groupstudentsjoins,
+            $studentsjoins,
+            $questions,
+            $reporturl
+        );
     }
 
     /**
@@ -88,7 +88,11 @@ class quiz_exportattemptscsv_table extends attempts_report_table {
         global $PAGE;
         echo '<input type="submit" id="exportattemptsbutton" name="export" value="' .
             get_string('exportselected', 'quiz_exportattemptscsv') . '"/>';
-        $PAGE->requires->event_handler('#exportattemptsbutton', 'click', 'M.util.show_confirm_dialog',
-            ['message' => get_string('exportattemptcheck', 'quiz_exportattemptscsv')]);
+        $PAGE->requires->event_handler(
+            '#exportattemptsbutton',
+            'click',
+            'M.util.show_confirm_dialog',
+            ['message' => get_string('exportattemptcheck', 'quiz_exportattemptscsv')]
+        );
     }
 }
