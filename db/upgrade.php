@@ -25,6 +25,12 @@
 /**
  * Quiz exportattemptscsv report upgrade code.
  */
+
+/**
+ * Apply this to align/upgrade old releases
+ * @param int $oldversion The old version of the module
+ * @return bool
+ */
 function xmldb_quiz_exportattemptscsv_upgrade($oldversion) {
     global $DB;
     $dbman = $DB->get_manager();
