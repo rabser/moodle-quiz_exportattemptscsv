@@ -38,7 +38,6 @@ require_once($CFG->dirroot . '/mod/quiz/report/attemptsreport_table.php');
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class quiz_exportattemptscsv_table extends quiz_attempts_report_table {
-
     /**
      * Constructor
      * @param object $quiz the quiz settings
@@ -50,12 +49,27 @@ class quiz_exportattemptscsv_table extends quiz_attempts_report_table {
      * @param array $questions an array of question objects
      * @param moodle_url $reporturl the URL of this report
      */
-    public function __construct($quiz, $context, $qmsubselect,
-                                quiz_exportattemptscsv_options $options,
-                                $groupstudentsjoins, $studentsjoins, $questions, $reporturl) {
-        parent::__construct('mod-quiz-report-export-report', $quiz, $context,
-                            $qmsubselect, $options, $groupstudentsjoins,
-                            $studentsjoins, $questions, $reporturl);
+    public function __construct(
+        $quiz,
+        $context,
+        $qmsubselect,
+        quiz_exportattemptscsv_options $options,
+        $groupstudentsjoins,
+        $studentsjoins,
+        $questions,
+        $reporturl
+    ) {
+        parent::__construct(
+            'mod-quiz-report-export-report',
+            $quiz,
+            $context,
+            $qmsubselect,
+            $options,
+            $groupstudentsjoins,
+            $studentsjoins,
+            $questions,
+            $reporturl
+        );
     }
 
     /**
@@ -77,7 +91,11 @@ class quiz_exportattemptscsv_table extends quiz_attempts_report_table {
         global $PAGE;
         echo '<input type="submit" id="exportattemptsbutton" name="export" value="' .
             get_string('exportselected', 'quiz_exportattemptscsv') . '"/>';
-        $PAGE->requires->event_handler('#exportattemptsbutton', 'click', 'M.util.show_confirm_dialog',
-            ['message' => get_string('exportattemptcheck', 'quiz_exportattemptscsv')]);
+        $PAGE->requires->event_handler(
+            '#exportattemptsbutton',
+            'click',
+            'M.util.show_confirm_dialog',
+            ['message' => get_string('exportattemptcheck', 'quiz_exportattemptscsv')]
+        );
     }
 }
