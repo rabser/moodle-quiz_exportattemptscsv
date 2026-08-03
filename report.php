@@ -147,6 +147,7 @@ class quiz_exportattemptscsv_report extends attempts_report {
      * @param moodle_url $redirecturl where to redircet to after a successful action.
      */
     protected function process_actions($quiz, $cm, $currentgroup, $groupstudents, $allowed, $redirecturl) {
+        global $DB;
         require_capability('quiz/exportattemptscsv:download', $this->context);
         if (empty($currentgroup) || $groupstudents) {
             if (optional_param('export', 0, PARAM_BOOL) && confirm_sesskey()) {
@@ -159,7 +160,7 @@ class quiz_exportattemptscsv_report extends attempts_report {
                     [$asql, $aparams] = $DB->get_in_or_equal($attemptids, SQL_PARAMS_NAMED);
                     $valid = $DB->get_fieldset_sql(
                         "SELECT quiza.id
-                           FROM {quiz_attempts} quiza
+                           FROM {quiz_attempts} quiza, {user} u
                            {$allowed->joins}
                           WHERE quiza.quiz = :quizid
                             AND quiza.id $asql
@@ -311,7 +312,7 @@ class quiz_exportattemptscsv_report extends attempts_report {
             [$asql, $aparams] = $DB->get_in_or_equal($attemptid, SQL_PARAMS_NAMED);
             $valid = $DB->get_fieldset_sql(
                 "SELECT quiza.id
-                   FROM {quiz_attempts} quiza
+                   FROM {quiz_attempts} quiza, {user u}
                    {$allowed->joins}
                   WHERE quiza.quiz = :quizid
                     AND quiza.id $asql
