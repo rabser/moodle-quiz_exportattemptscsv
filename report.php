@@ -312,7 +312,7 @@ class quiz_exportattemptscsv_report extends attempts_report {
             [$asql, $aparams] = $DB->get_in_or_equal($attemptid, SQL_PARAMS_NAMED);
             $valid = $DB->get_fieldset_sql(
                 "SELECT quiza.id
-                   FROM {quiz_attempts} quiza, {user u}
+                   FROM {quiz_attempts} quiza, {user} u
                    {$allowed->joins}
                   WHERE quiza.quiz = :quizid
                     AND quiza.id $asql
