@@ -97,11 +97,8 @@ class quiz_exportattemptscsv_report extends attempts_report {
             $hasgroupstudents = $DB->record_exists_sql($sql, $groupstudentsjoins->params);
         }
 
-        // Table is downloading so it's better to have more memory.
-        raise_memory_limit(MEMORY_EXTRA);
-
         // Process actions.
-        $this->process_actions($quiz, $cm, $currentgroup, $groupstudentsjoins, $allowedjoin, $this->options->get_url());
+        $this->process_actions($quiz, $cm, $currentgroup, $hasgroupstudents, $allowedjoin, $this->options->get_url());
 
         // Start output.
 
@@ -159,14 +156,14 @@ class quiz_exportattemptscsv_report extends attempts_report {
      * @param object $quiz the quiz settings.
      * @param object $cm the cm object for the quiz.
      * @param int $currentgroup the currently selected group.
-     * @param array $groupstudentsjoin the students in the current group.
+     * @param array $hasgroupstudents the students in the current group.
      * @param array $allowedjoin the users whose attempt this user is allowed to modify.
      * @param moodle_url $redirecturl where to redircet to after a successful action.
      */
-    protected function process_actions($quiz, $cm, $currentgroup, $groupstudentsjoin, $allowedjoin, $redirecturl) {
+    protected function process_actions($quiz, $cm, $currentgroup, $hasgroupstudents, $allowedjoin, $redirecturl) {
         global $DB;
         require_capability('quiz/exportattemptscsv:download', $this->context);
-        if (empty($currentgroup) || $groupstudentsjoin) {
+        if (empty($currentgroup) || $hasgroupstudents) {
             if (optional_param('export', 0, PARAM_BOOL) && confirm_sesskey()) {
                 raise_memory_limit(MEMORY_HUGE);
                 set_time_limit(600);

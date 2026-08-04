@@ -24,6 +24,11 @@
 
 namespace quiz_exportattemptscsv\privacy;
 
+use core_privacy\local\metadata\collection;
+use core_privacy\local\request\writer;
+use core_privacy\local\request\transform;
+use core_privacy\manager;
+
 /**
  * Class to implement user-preference provider and declare the preference(s) the plugin owns.
  */
