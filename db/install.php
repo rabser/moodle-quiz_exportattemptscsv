@@ -33,6 +33,7 @@ function xmldb_quiz_exportattemptscsv_install() {
     $record->displayorder = '10000';
     $record->capability = 'quiz/exportattemptscsv:download';
 
+    $dbman = $DB->get_manager();
     if ($dbman->table_exists('quiz_reports')) {
         $DB->insert_record('quiz_reports', $record);
     } else {
