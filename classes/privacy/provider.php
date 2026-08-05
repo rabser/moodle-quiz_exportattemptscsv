@@ -24,6 +24,11 @@
 
 namespace quiz_exportattemptscsv\privacy;
 
+use core_privacy\local\metadata\collection;
+use core_privacy\local\request\writer;
+use core_privacy\local\request\transform;
+use core_privacy\manager;
+
 /**
  * Class to implement user-preference provider and declare the preference(s) the plugin owns.
  */
@@ -37,6 +42,9 @@ class provider implements
      * @return collection A listing of user data stored through this system.
      */
     public static function get_metadata(collection $collection): collection {
+        $collection->add_user_preference('quiz_exportattemptscsv_qtext', 'privacy:preference:qtext');
+        $collection->add_user_preference('quiz_exportattemptscsv_resp', 'privacy:preference:resp');
+        $collection->add_user_preference('quiz_exportattemptscsv_right', 'privacy:preference:right');
         $collection->add_user_preference('quiz_exportattemptscsv_gdpr', 'privacy:preference:gdpr');
         return $collection;
     }
@@ -47,6 +55,33 @@ class provider implements
      * @param  int $userid The userid of the user whose data is to be exported.
      */
     public static function export_user_preferences(int $userid) {
+        $pref = get_user_preferences('quiz_exportattemptscsv_qtext', null, $userid);
+        if ($pref !== null) {
+            writer::export_user_preference(
+                'quiz_exportattemptscsv',
+                'qtext',
+                transform::yesno($pref),
+                get_string('privacy:preference:qtext', 'quiz_exportattemptscsv')
+            );
+        }
+        $pref = get_user_preferences('quiz_exportattemptscsv_resp', null, $userid);
+        if ($pref !== null) {
+            writer::export_user_preference(
+                'quiz_exportattemptscsv',
+                'resp',
+                transform::yesno($pref),
+                get_string('privacy:preference:resp', 'quiz_exportattemptscsv')
+            );
+        }
+        $pref = get_user_preferences('quiz_exportattemptscsv_right', null, $userid);
+        if ($pref !== null) {
+            writer::export_user_preference(
+                'quiz_exportattemptscsv',
+                'right',
+                transform::yesno($pref),
+                get_string('privacy:preference:right', 'quiz_exportattemptscsv')
+            );
+        }
         $pref = get_user_preferences('quiz_exportattemptscsv_gdpr', null, $userid);
         if ($pref !== null) {
             writer::export_user_preference(

@@ -26,9 +26,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2026073000;
+$plugin->version = 2026080404;
 $plugin->requires = 2024092700; // Moodle 4.5 !
 $plugin->maturity = MATURITY_STABLE;
-$plugin->release = '1.0.5c (Build 2026073000)';
+$plugin->release = '1.0.5c (Build 2026080404)';
 $plugin->component = 'quiz_exportattemptscsv';
 $plugin->supported = [405, 405];

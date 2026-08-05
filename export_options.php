@@ -128,6 +128,7 @@ class quiz_exportattemptscsv_options extends attempts_report_options {
      * Check the settings, and remove any 'impossible' combinations.
      */
     public function resolve_dependencies() {
+        parent::resolve_dependencies();
         $this->checkboxcolumn = true;
     }
 }
