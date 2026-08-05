@@ -24,7 +24,6 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot . '/mod/quiz/locallib.php');
@@ -32,7 +31,6 @@ require_once($CFG->dirroot . '/mod/quiz/report/attemptsreport.php');
 require_once($CFG->dirroot . '/mod/quiz/report/exportattemptscsv/export_form.php');
 require_once($CFG->dirroot . '/mod/quiz/report/exportattemptscsv/export_options.php');
 require_once($CFG->dirroot . '/mod/quiz/report/exportattemptscsv/export_table.php');
-
 
 
 /**
@@ -49,10 +47,10 @@ class quiz_exportattemptscsv_report extends quiz_attempts_report {
      * @param object $course the courses we are in.
      */
     public function display($quiz, $cm, $course) {
-        global $OUTPUT;
+        global $DB, $OUTPUT;
 
         // This inits the quiz_attempts_report (parent class) functionality.
-        [$currentgroup, $students, $groupstudents, $allowed] =
+        [$currentgroup, $studentsjoins, $groupstudentsjoins, $allowedjoin] =
             $this->init('exportattemptscsv', 'quiz_exportattemptscsv_settings_form', $quiz, $cm, $course);
 
         // This creates a new options object and ...
@@ -73,21 +71,37 @@ class quiz_exportattemptscsv_report extends quiz_attempts_report {
             $this->context,
             $this->qmsubselect,
             $this->options,
-            $groupstudents,
-            $students,
+            $groupstudentsjoins,
+            $studentsjoins,
             $questions,
             $this->options->get_url()
         );
 
+        $hasstudents = false;
+        if (!empty($studentsjoins->joins)) {
+            $sql = "SELECT DISTINCT u.id
+                    FROM {user} u
+                    $studentsjoins->joins
+                    WHERE $studentsjoins->wheres";
+            $hasstudents = $DB->record_exists_sql($sql, $studentsjoins->params);
+        }
+
+        $hasgroupstudents = false;
+        if (!empty($groupstudentsjoins->joins)) {
+            $sql = "SELECT DISTINCT u.id
+                      FROM {user} u
+                    $groupstudentsjoins->joins
+                     WHERE $groupstudentsjoins->wheres";
+            $hasgroupstudents = $DB->record_exists_sql($sql, $groupstudentsjoins->params);
+        }
+
         // Process actions.
-        $this->process_actions($quiz, $cm, $currentgroup, $groupstudents, $allowed, $this->options->get_url());
+        $this->process_actions($quiz, $cm, $currentgroup, $hasgroupstudents, $allowedjoin, $this->options->get_url());
 
         // Start output.
 
-        // Print moodle headers (header, navigation, etc.) only if not downloading.
-        if (!$table->is_downloading()) {
-            $this->print_header_and_tabs($cm, $course, $quiz, $this->mode);
-        }
+        // Print moodle headers (header, navigation, etc.).
+        $this->print_header_and_tabs($cm, $course, $quiz, $this->mode);
 
         // Group selector.
         if ($groupmode = groups_get_activity_groupmode($cm)) {
@@ -98,17 +112,17 @@ class quiz_exportattemptscsv_report extends quiz_attempts_report {
         $hasquestions = quiz_has_questions($quiz->id);
         if (!$hasquestions) {
             echo quiz_no_questions_message($quiz, $cm, $this->context);
-        } else if (!$students) {
+        } else if (!$hasstudents) {
             echo $OUTPUT->notification(get_string('nostudentsyet'));
-        } else if ($currentgroup && !$groupstudents) {
+        } else if ($currentgroup && !$hasgroupstudents) {
             echo $OUTPUT->notification(get_string('nostudentsingroup'));
         }
 
         $this->form->display();
 
-        $hasstudents = $students && (!$currentgroup || $groupstudents);
+        $hasstudents = $hasstudents && (!$currentgroup || $hasgroupstudents);
         if ($hasquestions && ($hasstudents || $this->options->attempts == self::ALL_WITH)) {
-            [$fields, $from, $where, $params] = $table->base_sql($allowed);
+            [$fields, $from, $where, $params] = $table->base_sql($allowedjoin);
 
             $table->set_sql($fields, $from, $where, $params);
 
@@ -116,14 +130,12 @@ class quiz_exportattemptscsv_report extends quiz_attempts_report {
             $columns = [];
             $headers = [];
 
-            if (!$table->is_downloading() && $this->options->checkboxcolumn) {
+            if ($this->options->checkboxcolumn) {
+                // Display a checkbox column for bulk export.
                 $columnname = 'checkbox';
+                $columns[] = $columnname;
                 $headers[] = $table->checkbox_col_header($columnname);
             }
-
-            // Display a checkbox column for bulk export.
-            $columns[] = 'checkbox';
-            $headers[] = null;
 
             $this->add_user_columns($table, $columns, $headers);
 
@@ -142,14 +154,14 @@ class quiz_exportattemptscsv_report extends quiz_attempts_report {
      * @param object $quiz the quiz settings.
      * @param object $cm the cm object for the quiz.
      * @param int $currentgroup the currently selected group.
-     * @param array $groupstudents the students in the current group.
-     * @param array $allowed the users whose attempt this user is allowed to modify.
+     * @param array $hasgroupstudents the students in the current group.
+     * @param array $allowedjoin the users whose attempt this user is allowed to modify.
      * @param moodle_url $redirecturl where to redircet to after a successful action.
      */
-    protected function process_actions($quiz, $cm, $currentgroup, $groupstudents, $allowed, $redirecturl) {
+    protected function process_actions($quiz, $cm, $currentgroup, $hasgroupstudents, $allowedjoin, $redirecturl) {
         global $DB;
         require_capability('quiz/exportattemptscsv:download', $this->context);
-        if (empty($currentgroup) || $groupstudents) {
+        if (empty($currentgroup) || $hasgroupstudents) {
             if (optional_param('export', 0, PARAM_BOOL) && confirm_sesskey()) {
                 raise_memory_limit(MEMORY_HUGE);
                 set_time_limit(600);
@@ -160,15 +172,16 @@ class quiz_exportattemptscsv_report extends quiz_attempts_report {
                     [$asql, $aparams] = $DB->get_in_or_equal($attemptids, SQL_PARAMS_NAMED);
                     $valid = $DB->get_fieldset_sql(
                         "SELECT quiza.id
-                           FROM {quiz_attempts} quiza, {user} u
-                           {$allowed->joins}
+                           FROM {quiz_attempts} quiza
+                           JOIN {user} u ON u.id = quiza.userid
+                           {$allowedjoin->joins}
                           WHERE quiza.quiz = :quizid
                             AND quiza.id $asql
-                            AND {$allowed->wheres}",
-                        array_merge(['quizid' => $quiz->id], $aparams, $allowed->params)
+                            AND {$allowedjoin->wheres}",
+                        array_merge(['quizid' => $quiz->id], $aparams, $allowedjoin->params)
                     );
                     if ($valid) {
-                        $this->export_attempts($quiz, $cm, $valid, $allowed);
+                        $this->export_attempts($quiz, $cm, $valid, $allowedjoin);
                     }
                     redirect($redirecturl);
                 }
@@ -181,11 +194,11 @@ class quiz_exportattemptscsv_report extends quiz_attempts_report {
      * @param object $quiz the quiz settings.
      * @param object $cm the course_module object.
      * @param array $attemptids the list of attempt ids to export.
-     * @param array $allowed This list of userids that are visible in the report.
+     * @param array $allowedjoin This list of userids that are visible in the report.
      *      Users can only export attempts that they are allowed to see in the report.
      *      Empty means all users.
      */
-    protected function export_attempts($quiz, $cm, $attemptids, $allowed) {
+    protected function export_attempts($quiz, $cm, $attemptids, $allowedjoin) {
         global $DB, $CFG;
 
         require_capability('quiz/exportattemptscsv:download', $this->context);
@@ -253,7 +266,6 @@ class quiz_exportattemptscsv_report extends quiz_attempts_report {
                                      LEFT JOIN {question_attempt_step_data} qasd ON qasd.attemptstepid = qas.id
                                      WHERE quiza.id = ? AND quiza.quiz = ?
                                      ORDER BY quiza.userid, quiza.attempt, qa.slot, qas.sequencenumber, qasd.name ";
-        $csvfile = fopen($tmpcsvfile, 'w');
 
         $header[] = get_string('seq', 'quiz_exportattemptscsv');
         if ($this->options->showgdpr) {
@@ -312,12 +324,13 @@ class quiz_exportattemptscsv_report extends quiz_attempts_report {
             [$asql, $aparams] = $DB->get_in_or_equal($attemptid, SQL_PARAMS_NAMED);
             $valid = $DB->get_fieldset_sql(
                 "SELECT quiza.id
-                   FROM {quiz_attempts} quiza, {user} u
-                   {$allowed->joins}
+                   FROM {quiz_attempts} quiza
+                   JOIN {user} u ON u.id = quiza.userid
+                   {$allowedjoin->joins}
                   WHERE quiza.quiz = :quizid
                     AND quiza.id $asql
-                    AND {$allowed->wheres}",
-                array_merge(['quizid' => $quiz->id], $aparams, $allowed->params)
+                    AND {$allowedjoin->wheres}",
+                array_merge(['quizid' => $quiz->id], $aparams, $allowedjoin->params)
             );
             if ($valid) {
                 $params = [$attemptid, $quiz->id];
@@ -332,6 +345,7 @@ class quiz_exportattemptscsv_report extends quiz_attempts_report {
             }
         }
 
+        fclose($csvfile);
         header("Content-Type: text/csv; charset=UTF-8");
         header("Content-Disposition: attachment; filename=\"quiz_exportattempts_" . $quiz->id . ".csv\"");
         readfile($tmpcsvfile);

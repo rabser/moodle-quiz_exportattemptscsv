@@ -26,8 +26,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2026072800;
+$plugin->version = 2026080401;
 $plugin->requires = 2020061500;
 $plugin->maturity = MATURITY_STABLE;
-$plugin->release = '1.0.3c.1 (Build 2026072800)';
+$plugin->release = '1.0.3c.2 (Build 2026080401)';
 $plugin->component = 'quiz_exportattemptscsv';
